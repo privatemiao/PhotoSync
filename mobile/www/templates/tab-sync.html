@@ -1,0 +1,21 @@
+<ion-view view-title="Photo Sync">
+  <ion-content class="padding">
+    <h5>Photo on your device</h5>
+    
+	<div class="row" data-ng-repeat="image in variables.images" data-ng-if="$index % 4 == 0">
+		<div class="col col-25" data-ng-if="$index < variables.images.length">
+			<img data-ng-src="{{variables.images[$index].src}}" alt="" width="100%" />
+		</div>
+		<div class="col col-25" data-ng-if="$index + 1 < variables.images.length">
+			<img data-ng-src="{{variables.images[$index + 1].src}}" alt="" width="100%" />
+		</div>
+		<div class="col col-25" data-ng-if="$index + 2 < variables.images.length">
+			<img data-ng-src="{{variables.images[$index + 2].src}}" alt="" width="100%" />
+		</div>
+		<div class="col col-25" data-ng-if="$index + 3 < variables.images.length">
+			<img data-ng-src="{{variables.images[$index + 3].src}}" alt="" width="100%" />
+		</div>
+	</div>    
+    
+  </ion-content>
+</ion-view>
