@@ -7,7 +7,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', [ 'ionic', 'ngCordova', 'starter.controllers', 'starter.services' ])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $cordovaDevice) {
 	$ionicPlatform.ready(function() {
 		// Hide the accessory bar by default (remove this to show the accessory
 		// bar above the keyboard
@@ -21,6 +21,15 @@ angular.module('starter', [ 'ionic', 'ngCordova', 'starter.controllers', 'starte
 			// org.apache.cordova.statusbar required
 			StatusBar.styleDefault();
 		}
+
+		if ($cordovaDevice){
+			console.log("~~~~~~~~~~~~~");
+			window.variables = {
+					platform : $cordovaDevice.getPlatform(),
+					model : $cordovaDevice.getModel()
+			};
+		}
+
 	});
 })
 
