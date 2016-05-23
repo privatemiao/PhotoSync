@@ -22,7 +22,6 @@ angular.module('starter', [ 'ionic', 'ngCordova', 'starter.controllers', 'starte
 			StatusBar.styleDefault();
 		}
 		
-
 	});
 })
 

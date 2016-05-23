@@ -16,9 +16,5 @@ angular.module('starter.controllers')
 		model : 'loadding...'
 	};
 
-	$ionicPlatform.ready(function() {
-		$scope.variables.platform = window.variables.platform;
-		$scope.variables.model = window.variables.model;
-	});
 
 });
