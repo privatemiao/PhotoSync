@@ -1,6 +1,6 @@
 angular.module('starter.controllers')
 
-.controller('SyncController', function($ionicPlatform, $scope, $ionicLoading, $ionicPopup) {
+.controller('SyncController', function($scope) {
 	$scope.variables = {
 		appName : 'Photo Sync',
 		images : (function() {
@@ -16,5 +16,8 @@ angular.module('starter.controllers')
 		model : 'loadding...'
 	};
 
+}).controller('ViewController', function($scope) {
+
+}).controller('SettingController', function($scope) {
 
 });
