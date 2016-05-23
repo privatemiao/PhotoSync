@@ -21,14 +21,7 @@ angular.module('starter', [ 'ionic', 'ngCordova', 'starter.controllers', 'starte
 			// org.apache.cordova.statusbar required
 			StatusBar.styleDefault();
 		}
-
-		if ($cordovaDevice){
-			console.log("~~~~~~~~~~~~~");
-			window.variables = {
-					platform : $cordovaDevice.getPlatform(),
-					model : $cordovaDevice.getModel()
-			};
-		}
+		
 
 	});
 })
