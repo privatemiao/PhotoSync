@@ -1,6 +1,7 @@
 <ion-view view-title="Photo Sync">
   <ion-content class="padding">
     <h5>Photo on your device</h5>
+    appName: <label for="">{{variables.appName}}</label><br />
     platform: <label for="">{{variables.platform}}</label><br>
     model: <label for="">{{variables.model}}</label><br>
 	<div class="row" data-ng-repeat="image in variables.images" data-ng-if="$index % 4 == 0">

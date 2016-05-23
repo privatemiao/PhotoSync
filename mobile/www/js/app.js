@@ -82,3 +82,6 @@ angular.module('starter', [ 'ionic', 'ngCordova', 'starter.controllers', 'starte
 	$urlRouterProvider.otherwise('/tab/sync');
 
 });
+
+angular.module('starter.controllers', []);
+angular.module('starter.services', [])
