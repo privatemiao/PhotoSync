@@ -43,6 +43,16 @@ angular.module('starter', [ 'ionic', 'ngCordova', 'starter.controllers', 'starte
 			}
 		}
 	})
+	
+	.state('tab.file', {
+		url : '/file',
+		views : {
+			'tab-file' : {
+				templateUrl : 'templates/tab-file.html',
+				controller : 'FileController'
+			}
+		}
+	})
 
 	.state('tab.setting', {
 		url : '/setting',

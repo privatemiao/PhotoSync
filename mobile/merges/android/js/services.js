@@ -15,10 +15,10 @@ angular.module('starter.services').factory('FileService', function($q) {
 		},
 		getEntriesAtRoot : function() {
 			var deferred = $q.defer();
-			window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(entry) {
-				var directoryReader = entry.root.createReader();
-				directoryReader.readEntries(function(entries) {
-					deferred.resolve(entries);
+			resolveLocalFileSystemURL('file:///', function(entry) {
+				var directoryReader = entry.createReader();
+				directoryReader.readEntries(function(result) {
+					deferred.resolve(result);
 				}, function(error) {
 					deferred.reject(error);
 				});

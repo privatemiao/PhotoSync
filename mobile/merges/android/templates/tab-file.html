@@ -1,0 +1,10 @@
+<ion-view view-title="File Browser"> <ion-content class="padding">
+<h5>File Browser</h5>
+<div class="list">
+	<div data-ng-repeat="file in files">
+		<a href="javascript:void(0)" data-ng-click="getContent(file.nativeURL)" class="item item-icon-file"> <i data-ng-show="file.isDirectory" class="icon ion-folder"></i> <i data-ng-show="file.isFile"
+			class="icon ion-document"></i> {{file.name}}
+		</a>
+	</div>
+</div>
+</ion-content> </ion-view>
