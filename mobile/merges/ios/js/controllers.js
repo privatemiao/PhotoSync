@@ -29,7 +29,7 @@ angular.module('starter.controllers')
 							var i;
 							for (i in $scope.variables.photos) {
 								$scope.variables.images.unshift($scope.variables.photos[i]);
-								if (i == 10) {
+								if (i == 30) {
 									break;
 								}
 							}
