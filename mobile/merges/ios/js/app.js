@@ -14,8 +14,13 @@ angular.module('starter', [ 'ionic', 'ngCordova', 'starter.controllers', 'starte
 	});
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+
+.config(function($stateProvider, $urlRouterProvider, $compileProvider) {
+	$compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension|cdvfile):/);
+	$compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|file|blob|cdvfile):|data:image\//);
+	
 	console.log('config>', ionic.Platform.platform());
+	
 	$stateProvider
 
 	.state('tab', {
