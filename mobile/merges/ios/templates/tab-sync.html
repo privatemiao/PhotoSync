@@ -1,6 +1,18 @@
+<style>
+	.photo-row{
+		padding-left: 0;
+		padding-right: 0;
+		padding-top: 0;
+	}
+	.photo-row>div{
+		padding: 2px;
+		padding-top: 0;
+		padding-bottom: 0;
+	}
+</style>
 <ion-view view-title="Photo Sync"> <ion-content class="padding">
 <h5>Photo on your device - IOS</h5>
-<div class="row" data-ng-repeat="image in variables.images" data-ng-if="$index % 4 == 0">
+<div class="row photo-row" data-ng-repeat="image in variables.images" data-ng-if="$index % 4 == 0">
 	<div class="col col-25" data-ng-if="$index < variables.images.length">
 		<img data-ng-src="{{variables.images[$index].src}}" alt="" width="100%" />
 	</div>
