@@ -19,14 +19,21 @@ angular.module('starter.controllers')
 
 	var service = {
 		conver2Image : function(photos) {
-			var begin = new Date().getTime();
 			var index;
 			for (index in photos) {
-				(function(_index){
-					PhotoService.convert2Image(photos[_index]).then(function(image){
+				(function(_index) {
+					PhotoService.convert2Image(photos[_index]).then(function(image) {
 						$scope.variables.photos.push(image);
-						if (_index == photos.length - 1){
-							alert('found ' + photos.length + ' photos, cost ' + (new Date().getTime() - begin) + ' milliseconds.');
+						if (_index == photos.length - 1) {
+
+							var i;
+							for (i in $scope.variables.photos) {
+								$scope.variables.images.unshift($scope.variables.photos[i]);
+								if (i == 10) {
+									break;
+								}
+							}
+
 						}
 					});
 				})(index);
