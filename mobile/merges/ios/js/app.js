@@ -54,7 +54,7 @@ angular.module('starter', [ 'ionic', 'ngCordova', 'starter.controllers', 'starte
 		}
 	});
 
-	$urlRouterProvider.otherwise('/tab/sync');
+	$urlRouterProvider.otherwise('/tab/view');
 
 });
 
