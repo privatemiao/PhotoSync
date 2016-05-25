@@ -25,9 +25,9 @@ angular.module('starter.controllers')
 				(function(_index){
 					PhotoService.convert2Image(photos[_index]).then(function(image){
 						$scope.variables.photos.push(image);
-						if (_index == photos.length - 1){
-							alert('found ' + photos.length + ' photos, cost ' + (new Date().getTime() - begin) + ' milliseconds.');
-						}
+//						if (_index == photos.length - 1){
+//							alert('found ' + photos.length + ' photos, cost ' + (new Date().getTime() - begin) + ' milliseconds.');
+//						}
 					});
 				})(index);
 			}
