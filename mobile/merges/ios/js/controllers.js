@@ -5,23 +5,36 @@ angular.module('starter.controllers')
 
 	$scope.variables = {
 		appName : 'Photo Sync',
-		images : []
+		images : (function() {
+			var imgs = [];
+			for (var i = 0; i < 103; i++) {
+				imgs.push({
+					src : 'img/50x50.png'
+				});
+			}
+			return imgs;
+		})(),
+		photos : []
 	};
 
 	var service = {
 		conver2Image : function(photos) {
-			console.log('conver2Image>');
+			var begin = new Date().getTime();
 			var index;
 			for (index in photos) {
-				PhotoService.convert2Image(photos[index]).then(function(image){
-					$scope.variables.images.push(image);
-				});
+				(function(_index){
+					PhotoService.convert2Image(photos[_index]).then(function(image){
+						$scope.variables.photos.push(image);
+						if (_index == photos.length - 1){
+							alert('found ' + photos.length + ' photos, cost ' + (new Date().getTime() - begin) + ' milliseconds.');
+						}
+					});
+				})(index);
 			}
 		}
 	};
 
 	PhotoService.getLocalPhotos().then(function(photos) {
-		console.log('getLocalPhotos>', photos);
 		service.conver2Image(photos);
 	});
 
