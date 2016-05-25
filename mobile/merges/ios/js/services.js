@@ -23,6 +23,7 @@ angular.module('starter.services').factory('PhotoService', function($q) {
 			resolveLocalFileSystemURL(url, function(entry) {
 				entry.file(function(file){
 					image.src = file.localURL;
+					console.log(file);
 					deferred.resolve(image);
 				});
 			});
