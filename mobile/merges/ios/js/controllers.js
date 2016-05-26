@@ -1,8 +1,4 @@
-angular.module('starter.controllers')
-
-.controller('SyncController', function($ionicPlatform, $scope, PhotoService) {
-	console.log('Photo Sync Controller.');
-
+angular.module('starter.controllers').controller('SyncController', function($ionicPlatform, $scope, PhotoService) {
 	$scope.variables = {
 		appName : 'Photo Sync',
 		images : [],
@@ -16,26 +12,10 @@ angular.module('starter.controllers')
 				(function(_index) {
 					PhotoService.convert2Image(photos[_index]).then(function(image) {
 						$scope.variables.photos.push(image);
-						if (_index == photos.length - 1) {
 
-							// var i;
-							// for (i in $scope.variables.photos) {
-							// $scope.variables.images.unshift($scope.variables.photos[i]);
-							// if (i == 30) {
-							// break;
-							// }
-							// }
-
-							reference.fillImages();
-						}
+						$scope.variables.images[_index].src = image.src;
 					});
 				})(index);
-			}
-		},
-		fillImages : function() {
-			var index;
-			for (index in $scope.variables.images) {
-				$scope.variables.images[index].src = $scope.variables.photos[index].src;
 			}
 		}
 	};

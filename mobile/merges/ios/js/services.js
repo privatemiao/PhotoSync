@@ -1,4 +1,4 @@
-angular.module('starter.services').factory('PhotoService', function($q) {
+angular.module('starter.services').factory('PhotoService', function($q, $timeout) {
 	return {
 		getLocalPhotos : function() {
 			var photos = [];
@@ -47,7 +47,6 @@ angular.module('starter.services').factory('PhotoService', function($q) {
 										id : image.id
 									}).then(function(movedThumbnailPath) {
 										image.src = movedThumbnailPath;
-										console.log(image);
 										deferred.resolve(image);
 									});
 								}, function(error) {
@@ -106,10 +105,8 @@ angular.module('starter.services').factory('PhotoService', function($q) {
 			var deferred = $q.defer();
 
 			window.resolveLocalFileSystemURL(cordova.file.dataDirectory + fileIdWithExt, function(fileEntry) {
-				console.log('Exist');
 				deferred.resolve(true);
 			}, function(error) {
-				console.log('Not Exist');
 				deferred.resolve(false);
 			});
 
