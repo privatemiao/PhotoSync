@@ -34,7 +34,7 @@ angular.module('starter.services').factory('PhotoService', function($q) {
 					// image.src = file.localURL;
 					image.id = file.localURL.substring(file.localURL.indexOf('id=') + 3, file.localURL.indexOf('&ext'));
 
-					if (image.type.startsWith('image')){
+					if (image.type.startsWith('image')) {
 						var thumbnail = image.id + '.' + image.name.split('.').pop();
 						reference.checkThumbnailExist(thumbnail).then(function(exist) {
 							if (exist) {
@@ -55,11 +55,10 @@ angular.module('starter.services').factory('PhotoService', function($q) {
 								});
 							}
 						});
-					}else{
+					} else {
 						image.src = 'img/video-placeholder.jpg';
 						deferred.resolve(image);
 					}
-					
 
 				});
 			});
@@ -105,18 +104,15 @@ angular.module('starter.services').factory('PhotoService', function($q) {
 		},
 		checkThumbnailExist : function(fileIdWithExt) {
 			var deferred = $q.defer();
-			requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
-		        fileSystem.root.getFile(cordova.file.dataDirectory + fileIdWithExt, { create: false }, function(){
-		        	console.log('exist')
-		        	deferred.resolve(true);
-		        }, function(){
-		        	console.log('not exist', cordova.file.dataDirectory + fileIdWithExt);
-		        	deferred.resolve(false);
-		        });
-		    }, function(evt){
-		    	resolve.reject(evt.target.error)
-		    });
-			
+
+			window.resolveLocalFileSystemURL(cordova.file.dataDirectory + fileIdWithExt, function(fileEntry) {
+				console.log('Exist');
+				deferred.resolve(true);
+			}, function(error) {
+				console.log('Not Exist');
+				deferred.resolve(false);
+			});
+
 			return deferred.promise;
 		}
 	};
@@ -127,8 +123,5 @@ angular.module('starter.services').factory('PhotoService', function($q) {
 // data-ng-src="file:///Users/mel/Library/Developer/CoreSimulator/Devices/28D1EB4D-F4A7-42E9-87D6-5A2CD340809D/data/Containers/Data/Application/E5BE2452-DB6F-40A6-B2CD-DC25ED4AADF6/Library/NoCloud//106E99A1-4F6A-45A2-B320-B0AD4A8E8473.jpg"
 // alt="" width="100%" height="90px"
 // src="file:///Users/mel/Library/Developer/CoreSimulator/Devices/28D1EB4D-F4A7-42E9-87D6-5A2CD340809D/data/Containers/Data/Application/E5BE2452-DB6F-40A6-B2CD-DC25ED4AADF6/Library/NoCloud//106E99A1-4F6A-45A2-B320-B0AD4A8E8473.jpg">
-//file:///Users/mel/Library/Developer/CoreSimulator/Devices/28D1EB4D-F4A7-42E9-87D6-5A2CD340809D/data/Containers/Data/Application/47BFDC28-187B-4959-8BE2-82C92F2EFA33/Library/NoCloud/B84E8479-475C-4727-A4A4-B77AA9980897.JPG
-
-
-
+// file:///Users/mel/Library/Developer/CoreSimulator/Devices/28D1EB4D-F4A7-42E9-87D6-5A2CD340809D/data/Containers/Data/Application/47BFDC28-187B-4959-8BE2-82C92F2EFA33/Library/NoCloud/B84E8479-475C-4727-A4A4-B77AA9980897.JPG
 
