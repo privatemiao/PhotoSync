@@ -1,4 +1,4 @@
-angular.module('starter.controllers').controller('SyncController', function($ionicPlatform, $scope, PhotoService) {
+angular.module('starter.controllers').controller('SyncController', function($ionicPlatform, $scope, PhotoService, $timeout) {
 	$scope.variables = {
 		appName : 'Photo Sync',
 		images : [],
@@ -8,17 +8,33 @@ angular.module('starter.controllers').controller('SyncController', function($ion
 	var service = {
 		conver2Image : function(photos) {
 			var index, reference = this;
-			for (index in photos) {
-				(function(_index) {
-					PhotoService.convert2Image(photos[_index]).then(function(image) {
-						$scope.variables.photos.push(image);
 
-						$scope.variables.images[_index].src = image.src;
-					});
-				})(index);
-			}
+			// for (index in photos) {
+			// (function(_index) {
+			// PhotoService.convert2Image(photos[_index]).then(function(image) {
+			// $scope.variables.photos.push(image);
+			//
+			// $scope.variables.images[_index].src = image.src;
+			// });
+			// })(index);
+			// }
+
+			(function _convertOneByOne(index) {
+				PhotoService.convert2Image(photos[index]).then(function(image) {
+					$scope.variables.photos.push(image);
+					$scope.variables.images[index].src = image.src;
+					index++;
+					if (index < photos.length) {
+						_convertOneByOne(index);
+					}
+				});
+			})(0);
+
 		}
 	};
+
+	PhotoService.checkCreateFolder(PhotoService.variables.thumbnailFolderName);
+	PhotoService.checkCreateFolder(PhotoService.variables.contactFolderName);
 
 	PhotoService.getLocalPhotos().then(function(photos) {
 		$scope.variables.images = (function() {

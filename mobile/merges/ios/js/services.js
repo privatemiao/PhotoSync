@@ -1,5 +1,9 @@
 angular.module('starter.services').factory('PhotoService', function($q, $timeout) {
 	return {
+		variables : {
+			thumbnailFolderName : 'Thumbnail', contactFolderName : 'Contact',
+			thumbnailDirURL : cordova.file.dataDirectory + 'Thumbnail'
+		},
 		getLocalPhotos : function() {
 			var photos = [];
 			var deferred = $q.defer();
@@ -67,8 +71,8 @@ angular.module('starter.services').factory('PhotoService', function($q, $timeout
 			var deferred = $q.defer();
 			ImageResizer.resize({
 				uri : path,
-				folderName : cordova.file.applicationStorageDirectory,
-				quality : 50,
+				folderName : cordova.file.dataDirectory,
+				quality : 100,
 				width : 100,
 				height : 80
 			}, function(thumbnailPath) {
@@ -81,12 +85,13 @@ angular.module('starter.services').factory('PhotoService', function($q, $timeout
 		},
 		persistThumbnail : function(file) {
 			var deferred = $q.defer();
+			var reference = this;
 			window.resolveLocalFileSystemURL(file.url, function(fileEntry) {
 				var fileExt = "." + file.url.split('.').pop();
 				var newFileName = file.id + fileExt;
-				window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(dirEntry) {
+				window.resolveLocalFileSystemURL(reference.variables.thumbnailDirURL, function(dirEntry) {
 					fileEntry.moveTo(dirEntry, newFileName, function() {
-						deferred.resolve(cordova.file.dataDirectory + '/' + newFileName);
+						deferred.resolve(reference.variables.thumbnailDirURL + newFileName);
 					}, function(error) {
 						console.error('1', error);
 						deferred.reject(error);
@@ -103,14 +108,29 @@ angular.module('starter.services').factory('PhotoService', function($q, $timeout
 		},
 		checkThumbnailExist : function(fileIdWithExt) {
 			var deferred = $q.defer();
+			var reference = this;
 
-			window.resolveLocalFileSystemURL(cordova.file.dataDirectory + fileIdWithExt, function(fileEntry) {
+			window.resolveLocalFileSystemURL(reference.variables.thumbnailDirURL + fileIdWithExt, function(fileEntry) {
 				deferred.resolve(true);
 			}, function(error) {
+				console.error('Not Exist>', )
 				deferred.resolve(false);
 			});
 
 			return deferred.promise;
+		},
+		checkCreateFolder : function(name) {
+			window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(fileEntry) {
+				fileEntry.getDirectory(name, {
+					create : true
+				}, function(entry) {
+				}, function(error) {
+					console.error(error);
+				});
+			}, function(error) {
+				console.log(error);
+			});
+
 		}
 	};
 })

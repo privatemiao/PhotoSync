@@ -13,7 +13,7 @@
 </style>
 
 <ion-view view-title="Photo Sync"> <ion-content class="">
-<h5>Photo on your device - {{variables.photos.length}}</h5>
+<h5>Photo on your device - {{variables.images.length}}</h5>
 <div class="row photo-row" data-ng-repeat="image in variables.images" data-ng-if="$index % 4 == 0">
 	<div class="col col-25" data-ng-if="$index < variables.images.length">
 		<img data-ng-src="{{variables.images[$index].src}}" alt="" width="100%" height="90px" />
