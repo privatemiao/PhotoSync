@@ -34,26 +34,32 @@ angular.module('starter.services').factory('PhotoService', function($q) {
 					// image.src = file.localURL;
 					image.id = file.localURL.substring(file.localURL.indexOf('id=') + 3, file.localURL.indexOf('&ext'));
 
-					var thumbnail = image.id + '.' + image.name.split('.').pop();
-					reference.checkThumbnailExist(thumbnail).then(function(exist) {
-						if (exist) {
-							image.src = cordova.file.dataDirectory + thumbnail;
-							deferred.resolve(image);
-						} else {
-							reference.makeThumbnail(file.localURL).then(function(thumbnailPath) {
-								reference.persistThumbnail({
-									url : thumbnailPath,
-									id : image.id
-								}).then(function(movedThumbnailPath) {
-									image.src = movedThumbnailPath;
-									console.log(image);
-									deferred.resolve(image);
+					if (image.type.startsWith('image')){
+						var thumbnail = image.id + '.' + image.name.split('.').pop();
+						reference.checkThumbnailExist(thumbnail).then(function(exist) {
+							if (exist) {
+								image.src = cordova.file.dataDirectory + thumbnail;
+								deferred.resolve(image);
+							} else {
+								reference.makeThumbnail(file.localURL).then(function(thumbnailPath) {
+									reference.persistThumbnail({
+										url : thumbnailPath,
+										id : image.id
+									}).then(function(movedThumbnailPath) {
+										image.src = movedThumbnailPath;
+										console.log(image);
+										deferred.resolve(image);
+									});
+								}, function(error) {
+									deferred.reject(error);
 								});
-							}, function(error) {
-								deferred.reject(error);
-							});
-						}
-					});
+							}
+						});
+					}else{
+						image.src = 'img/video-placeholder.jpg';
+						deferred.resolve(image);
+					}
+					
 
 				});
 			});
