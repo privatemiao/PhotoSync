@@ -26,6 +26,10 @@
     {
       "locator": "https://github.com/protonet/cordova-plugin-image-resizer.git",
       "id": "info.protonet.imageresizer"
+    },
+    {
+      "locator": "https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git",
+      "id": "cordova-plugin-x-toast"
     }
   ],
   "cordovaPlatforms": [

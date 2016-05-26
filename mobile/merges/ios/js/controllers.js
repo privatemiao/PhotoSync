@@ -54,12 +54,14 @@ angular.module('starter.controllers').controller('SyncController', function($ion
 
 }).controller('ViewController', function($scope) {
 
-}).controller('SettingController', function($scope, CommonService) {
+}).controller('SettingController', function($scope, CommonService, $cordovaToast) {
 	$scope.cleanThumbnail = function() {
 		CommonService.cleanThumbnail().then(function() {
 			CommonService.checkCreateFolder(CommonService.variables.thumbnailFolderName);
+			$cordovaToast.showShortCenter('Clean success!');
 		}, function(error) {
 			console.error(error);
+			$cordovaToast.showShortCenter('Clean fail!');
 		});
 	};
 });
