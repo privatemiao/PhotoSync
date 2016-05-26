@@ -22,7 +22,11 @@
     "cordova-plugin-statusbar",
     "ionic-plugin-keyboard",
     "cordova-plugin-file",
-    "cordova-camera-roll"
+    "cordova-camera-roll",
+    {
+      "locator": "https://github.com/protonet/cordova-plugin-image-resizer.git",
+      "id": "info.protonet.imageresizer"
+    }
   ],
   "cordovaPlatforms": [
     "android",

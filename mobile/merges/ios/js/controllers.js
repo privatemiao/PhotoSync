@@ -11,24 +11,31 @@ angular.module('starter.controllers')
 
 	var service = {
 		conver2Image : function(photos) {
-			var index;
+			var index, reference = this;
 			for (index in photos) {
 				(function(_index) {
 					PhotoService.convert2Image(photos[_index]).then(function(image) {
 						$scope.variables.photos.push(image);
 						if (_index == photos.length - 1) {
 
-							var i;
-							for (i in $scope.variables.photos) {
-								$scope.variables.images.unshift($scope.variables.photos[i]);
-								if (i == 30) {
-									break;
-								}
-							}
+							// var i;
+							// for (i in $scope.variables.photos) {
+							// $scope.variables.images.unshift($scope.variables.photos[i]);
+							// if (i == 30) {
+							// break;
+							// }
+							// }
 
+							reference.fillImages();
 						}
 					});
 				})(index);
+			}
+		},
+		fillImages : function() {
+			var index;
+			for (index in $scope.variables.images) {
+				$scope.variables.images[index].src = $scope.variables.photos[index].src;
 			}
 		}
 	};
@@ -36,7 +43,7 @@ angular.module('starter.controllers')
 	PhotoService.getLocalPhotos().then(function(photos) {
 		$scope.variables.images = (function() {
 			var imgs = [];
-			for (var i = 0; i < 103; i++) {
+			for (var i = 0; i < photos.length; i++) {
 				imgs.push({
 					src : 'img/50x50.png'
 				});
