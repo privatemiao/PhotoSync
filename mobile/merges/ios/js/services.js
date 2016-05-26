@@ -1,7 +1,8 @@
 angular.module('starter.services').factory('PhotoService', function($q, $timeout) {
 	return {
 		variables : {
-			thumbnailFolderName : 'Thumbnail', contactFolderName : 'Contact',
+			thumbnailFolderName : 'Thumbnail',
+			contactFolderName : 'Contact',
 			thumbnailDirURL : cordova.file.dataDirectory + 'Thumbnail'
 		},
 		getLocalPhotos : function() {
@@ -73,8 +74,8 @@ angular.module('starter.services').factory('PhotoService', function($q, $timeout
 				uri : path,
 				folderName : cordova.file.dataDirectory,
 				quality : 100,
-				width : 100,
-				height : 80
+				width : 150,
+				height : 150
 			}, function(thumbnailPath) {
 				deferred.resolve(thumbnailPath);
 			}, function(error) {
@@ -91,7 +92,7 @@ angular.module('starter.services').factory('PhotoService', function($q, $timeout
 				var newFileName = file.id + fileExt;
 				window.resolveLocalFileSystemURL(reference.variables.thumbnailDirURL, function(dirEntry) {
 					fileEntry.moveTo(dirEntry, newFileName, function() {
-						deferred.resolve(reference.variables.thumbnailDirURL + newFileName);
+						deferred.resolve(reference.variables.thumbnailDirURL + '/' + newFileName);
 					}, function(error) {
 						console.error('1', error);
 						deferred.reject(error);
@@ -109,18 +110,24 @@ angular.module('starter.services').factory('PhotoService', function($q, $timeout
 		checkThumbnailExist : function(fileIdWithExt) {
 			var deferred = $q.defer();
 			var reference = this;
-
-			window.resolveLocalFileSystemURL(reference.variables.thumbnailDirURL + fileIdWithExt, function(fileEntry) {
+			resolveLocalFileSystemURL(reference.variables.thumbnailDirURL + fileIdWithExt, function() {
 				deferred.resolve(true);
-			}, function(error) {
-				console.error('Not Exist>', )
+			}, function() {
+				console.log('File Not Exist');
 				deferred.resolve(false);
 			});
-
 			return deferred.promise;
+		}
+	};
+}).factory('CommonService', function($q) {
+	return {
+		variables : {
+			thumbnailFolderName : 'Thumbnail',
+			contactFolderName : 'Contact',
+			thumbnailDirURL : cordova.file.dataDirectory + 'Thumbnail'
 		},
 		checkCreateFolder : function(name) {
-			window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(fileEntry) {
+			resolveLocalFileSystemURL(cordova.file.dataDirectory, function(fileEntry) {
 				fileEntry.getDirectory(name, {
 					create : true
 				}, function(entry) {
@@ -130,7 +137,23 @@ angular.module('starter.services').factory('PhotoService', function($q, $timeout
 			}, function(error) {
 				console.log(error);
 			});
-
+		},
+		cleanThumbnail : function() {
+			var reference = this;
+			var deferred = $q.defer();
+			resolveLocalFileSystemURL(reference.variables.thumbnailDirURL, function(fileEntry) {
+				fileEntry.removeRecursively(function() {
+					console.log('Clean Success');
+					deferred.resolve();
+				}, function(error) {
+					console.error('CleanThumbnail Error', error);
+					deferred.reject(error);
+				});
+			}, function(error) {
+				console.error('CleanThumbnail Error', error);
+				deferred.reject(error);
+			});
+			return deferred.promise;
 		}
 	};
 })
