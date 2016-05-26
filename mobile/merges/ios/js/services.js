@@ -4,26 +4,30 @@ angular.module('starter.services').factory('PhotoService', function($q) {
 			var photos = [];
 			var deferred = $q.defer();
 			var reference = this;
-			CameraRoll.getPhotos(function(photo){
-				if (photo){
+			CameraRoll.getPhotos(function(photo) {
+				if (photo) {
 					photos.push(photo);
-				}else{
+				} else {
 					deferred.resolve(photos);
 				}
 			});
-			
+
 			return deferred.promise;
 		},
-		convert2Image : function(url){
+		convert2Image : function(url) {
 			var deferred = $q.defer();
-			if (!url){
+			if (!url) {
 				deferred.reject(null);
 			}
-			var image = {};
 			resolveLocalFileSystemURL(url, function(entry) {
-				entry.file(function(file){
-					image.src = file.localURL;
-					deferred.resolve(image);
+				entry.file(function(file) {
+					deferred.resolve({
+						name : file.name,
+						src : file.localURL,
+						size : file.size,
+						type : file.type,
+						lastModified : file.lastModified
+					});
 				});
 			});
 			return deferred.promise;
