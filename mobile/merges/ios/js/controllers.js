@@ -5,15 +5,7 @@ angular.module('starter.controllers')
 
 	$scope.variables = {
 		appName : 'Photo Sync',
-		images : (function() {
-			var imgs = [];
-			for (var i = 0; i < 103; i++) {
-				imgs.push({
-					src : 'img/50x50.png'
-				});
-			}
-			return imgs;
-		})(),
+		images : [],
 		photos : []
 	};
 
@@ -42,6 +34,15 @@ angular.module('starter.controllers')
 	};
 
 	PhotoService.getLocalPhotos().then(function(photos) {
+		$scope.variables.images = (function() {
+			var imgs = [];
+			for (var i = 0; i < 103; i++) {
+				imgs.push({
+					src : 'img/50x50.png'
+				});
+			}
+			return imgs;
+		})();
 		service.conver2Image(photos);
 	});
 
