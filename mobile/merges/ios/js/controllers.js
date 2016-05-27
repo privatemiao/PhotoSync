@@ -7,38 +7,47 @@ angular.module('starter.controllers').controller('SyncController', function($ion
 
 	var service = {
 		conver2Image : function(photos) {
+
 			var index = undefined, reference = this;
 
-			var total = 89;
-			var count = 10;
+			var total = photos.length;
+			var count = 2;
 			var pages = parseInt(total / count);
 
 			if (total % count != 0) {
 				pages++;
 			}
 
-			console.log('total>', total, " pages>", pages);
-
-			for (var currentPage = 0; currentPage < pages; currentPage++) {
-				console.log('currentPage>', currentPage);
-				(function(currentPage) {
-					for (var i = 0; i < count; i++) {
-						var photoIndex = currentPage * count + i;
-						if (photoIndex > total - 1) {
-							break;
-						}
-						// console.log('photoIndex', photoIndex);
-
-						// convert2Image(photoIndex);
-						(function(photoIndex) {
-							window.setTimeout(function() {
-								console.log(photoIndex);
-							}, 500);
-						})(photoIndex);
-
+//			console.log('total>', total, " pages>", pages);
+			(function _batchConvert(currentPage) {
+//				console.log('currentPage>', currentPage);
+				for (var i = 0; i < count; i++) {
+					var photoIndex = currentPage * count + i;
+					if (photoIndex > total - 1) {
+						break;
 					}
-				})(currentPage);
-			}
+					(function(photoIndex, i) {
+						// window.setTimeout(function() {
+						// console.log(currentPage, photoIndex, i);
+						// if (i == count - 1 && currentPage < pages - 1) {
+						// _batchConvert(++currentPage);
+						// }
+						// }, 500);
+
+						PhotoService.convert2Image(photos[photoIndex]).then(function(img) {
+//							console.log(currentPage, photoIndex, i, img.src);
+							$scope.variables.photos.push(img);
+							$scope.variables.images[photoIndex].src = img.src;
+							if (i == count - 1 && currentPage < pages - 1) {
+								_batchConvert(++currentPage);
+							}
+						}, function(error) {
+
+						});
+
+					})(photoIndex, i);
+				}
+			})(0);
 
 		},
 		checkSystemEnv : function() {
