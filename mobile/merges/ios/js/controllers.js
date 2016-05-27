@@ -9,7 +9,7 @@ angular.module('starter.controllers').controller('SyncController', function($ion
 		conver2Image : function(photos) {
 			var index = undefined, reference = this;
 
-			var total = photos.length;
+			var total = 89;
 			var count = 10;
 			var pages = parseInt(total / count);
 
@@ -18,6 +18,27 @@ angular.module('starter.controllers').controller('SyncController', function($ion
 			}
 
 			console.log('total>', total, " pages>", pages);
+
+			for (var currentPage = 0; currentPage < pages; currentPage++) {
+				console.log('currentPage>', currentPage);
+				(function(currentPage) {
+					for (var i = 0; i < count; i++) {
+						var photoIndex = currentPage * count + i;
+						if (photoIndex > total - 1) {
+							break;
+						}
+						// console.log('photoIndex', photoIndex);
+
+						// convert2Image(photoIndex);
+						(function(photoIndex) {
+							window.setTimeout(function() {
+								console.log(photoIndex);
+							}, 500);
+						})(photoIndex);
+
+					}
+				})(currentPage);
+			}
 
 		},
 		checkSystemEnv : function() {
