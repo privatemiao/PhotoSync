@@ -7,8 +7,20 @@ angular.module('starter.controllers').controller('SyncController', function($ion
 
 	var service = {
 		conver2Image : function(photos) {
-			var index, reference = this;
+			var index = undefined, reference = this;
 
+			var total = photos.length;
+			var count = 10;
+			var pages = parseInt(total / count);
+
+			if (total % count != 0) {
+				pages++;
+			}
+
+			console.log('total>', total, " pages>", pages);
+
+			
+			
 			// for (index in photos) {
 			// (function(_index) {
 			// PhotoService.convert2Image(photos[_index]).then(function(image) {
@@ -18,17 +30,17 @@ angular.module('starter.controllers').controller('SyncController', function($ion
 			// });
 			// })(index);
 			// }
-
-			(function _convertOneByOne(index) {
-				PhotoService.convert2Image(photos[index]).then(function(image) {
-					$scope.variables.photos.push(image);
-					$scope.variables.images[index].src = image.src;
-					index++;
-					if (index < photos.length) {
-						_convertOneByOne(index);
-					}
-				});
-			})(0);
+			// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+			// (function _convertOneByOne(index) {
+			// PhotoService.convert2Image(photos[index]).then(function(image) {
+			// $scope.variables.photos.push(image);
+			// $scope.variables.images[index].src = image.src;
+			// index++;
+			// if (index < photos.length) {
+			// _convertOneByOne(index);
+			// }
+			// });
+			// })(0);
 
 		},
 		checkSystemEnv : function() {

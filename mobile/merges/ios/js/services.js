@@ -65,6 +65,8 @@ angular.module('starter.services').factory('PhotoService', function($q, $timeout
 					}
 
 				});
+			}, function(error){
+				deferred.reject(error);
 			});
 			return deferred.promise;
 		},
@@ -113,7 +115,6 @@ angular.module('starter.services').factory('PhotoService', function($q, $timeout
 			resolveLocalFileSystemURL(reference.variables.thumbnailDirURL + fileIdWithExt, function() {
 				deferred.resolve(true);
 			}, function() {
-				console.log('File Not Exist');
 				deferred.resolve(false);
 			});
 			return deferred.promise;
