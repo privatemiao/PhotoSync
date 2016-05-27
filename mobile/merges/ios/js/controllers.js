@@ -19,29 +19,6 @@ angular.module('starter.controllers').controller('SyncController', function($ion
 
 			console.log('total>', total, " pages>", pages);
 
-			
-			
-			// for (index in photos) {
-			// (function(_index) {
-			// PhotoService.convert2Image(photos[_index]).then(function(image) {
-			// $scope.variables.photos.push(image);
-			//
-			// $scope.variables.images[_index].src = image.src;
-			// });
-			// })(index);
-			// }
-			// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-			// (function _convertOneByOne(index) {
-			// PhotoService.convert2Image(photos[index]).then(function(image) {
-			// $scope.variables.photos.push(image);
-			// $scope.variables.images[index].src = image.src;
-			// index++;
-			// if (index < photos.length) {
-			// _convertOneByOne(index);
-			// }
-			// });
-			// })(0);
-
 		},
 		checkSystemEnv : function() {
 			CommonService.checkCreateFolder(PhotoService.variables.thumbnailFolderName);

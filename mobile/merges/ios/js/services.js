@@ -24,6 +24,7 @@ angular.module('starter.services').factory('PhotoService', function($q, $timeout
 			var deferred = $q.defer();
 			if (!url) {
 				deferred.reject(null);
+				return deferred.promise;
 			}
 			resolveLocalFileSystemURL(url, function(entry) {
 				entry.file(function(file) {
